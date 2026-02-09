@@ -1,4 +1,8 @@
 package Easy;
+
+import java.util.Stack;
+import java.util.HashMap;
+import java.util.Map;
 /*  Leetcode question 20: Valid Parentheses
 
     Given a string s containing just the charcters '(', ')', '{', '}', '[', ']', determine if the input string is valid.
@@ -10,31 +14,27 @@ package Easy;
 */
 public class ValidParentheses {
     public boolean isValid(String s){
+        Stack<Character> stack = new Stack<>();
+        Map<Character, Character> closeToOpen = new HashMap<>();
+
+        closeToOpen.put(')','(');
+        closeToOpen.put(']','[');
+        closeToOpen.put('}','{');
+
         for(int i = 0; i < s.length(); i++){
-            if(i == '('){
-                for(int j = 1; j <s.length(); j++){
-                    if(j == ')'){
-                        return true;
-                    }
-                    i++;
+            char c = s.charAt(i);
+
+            if(closeToOpen.containsKey(c)){
+                if(!stack.isEmpty() && stack.peek() == closeToOpen.get(c)){
+                    stack.pop();
+                }else{
+                    return false;
                 }
-            }else if(i == '{'){
-                for(int j = 1; j <s.length(); j++){
-                    if(j == '}'){
-                        return true;
-                    }
-                    i++;
-                }
-            }else if(i == '['){
-                for(int j = 1; j <s.length(); j++){
-                    if(j == '}'){
-                        return true;
-                    }
-                    i++;
-                }
+            }else{
+                stack.push(c);
             }
         }
 
-        return false;
+        return stack.isEmpty();
     }
 }
