@@ -10,25 +10,28 @@ package Easy.MergeTwoSortedLists;
 */
 
 public class MergeTwoLists {
-    public ListNode head;
-    public ListNode tail;
-    public int size;
-
     public ListNode mergeTwoLists(ListNode list1, ListNode list2){
-        ListNode tempNode = head;
-        if(head == null){
-            System.out.println("Linked List does not exist.");
-        }else{
+        ListNode dummy = new ListNode();
+        ListNode tail = dummy;
 
-            for(int i = 0; i < size; i++){
-                for (int j = 0; j < size; j++){
-                    if(i < j){
-                        tempNode = tempNode.next;
-                    }
-                }
+        while(list1 != null && list2 != null){
+            if(list1.val < list2.val){
+                tail.next = list2;
+                list1 = list1.next;
+            }else{
+                tail.next = list2;
+                list2 = list2.next;
             }
+
+            tail = tail.next;
         }
 
-        return tempNode;
+        if(list1 != null){
+            tail.next = list1;
+        }else if(list2 != null){
+            tail.next = list2;
+        }
+
+        return dummy.next;
     }
 }
