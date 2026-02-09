@@ -13,14 +13,15 @@ public class RemoveDuplicates {
     ListNode head;
     int size;
     public int removeDuplicates(int[] nums){
-        int temp = 0;
-        for(int i = 0; i < size; i++){
-            if(nums[i] != nums[temp]){
-                temp++;
-                size--;
+        int l = 1;
+
+        for(int r = 1; r < nums.length; r++){
+            if(nums[r] != nums[r - 1]){
+                nums[l] = nums[r];
+                l++;
             }
         }
 
-        return temp;
+        return l;
     }
 }
