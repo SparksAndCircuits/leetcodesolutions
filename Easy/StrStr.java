@@ -8,12 +8,13 @@ package Easy;
 
 public class StrStr {
     public int strStr(String haystack, String needle){
+        if(needle.equals("")){
+            return 0;
+        }
 
-        for(int i = 0; i < haystack.length(); i++){
-            for(int j = 0; j < needle.length(); j++){
-                if(i == j){
-                    return i;
-                }
+        for(int i = 0; i <= haystack.length() - needle.length(); i++){
+            if(haystack.substring(i, i + needle.length()).equals(needle)){
+                return i;
             }
         }
 
