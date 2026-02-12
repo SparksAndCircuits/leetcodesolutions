@@ -1,4 +1,5 @@
 package Easy;
+import java.util.*;
 
 /* Leetcode question 66: Plus one
 
@@ -10,17 +11,34 @@ package Easy;
 
 public class PlusOne {
     public int[] plusOne(int[] digits){
-        for(int i = 0; i < digits.length; i++){
-            if(i == digits.length){
-                if(digits[i] == 9){
-                    digits[i] = 0;
-                    digits[i - 1] += 1;
+        List<Integer> digitsList = new ArrayList<>();
+
+        for(int i = digits.length - 1; i >= 0; i++){
+            digitsList.add(digits[i]);
+        }
+
+        int one = 1;
+        int i = 0;
+
+        while(one == 1){
+            if(i < digitsList.size()){
+                if(digitsList.get(i) == 9){
+                    digitsList.set(i,0);
                 }else{
-                    digits[i] +=1;
+                    digitsList.set(i, digitsList.get(i) + 1);
+                    one = 0;
                 }
+
+                i++;
             }
         }
 
-        return digits;
+        Collections.reverse(digitsList);
+        int[] result = new int[digitsList.size()];
+        for(int j = 0; j < digitsList.size(); j++){
+            result[j] = digitsList.get(j);
+        }
+
+        return result;
     }
 }
