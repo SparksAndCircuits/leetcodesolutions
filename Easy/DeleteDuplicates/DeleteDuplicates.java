@@ -7,17 +7,17 @@ package Easy.DeleteDuplicates;
 */
 
 public class DeleteDuplicates {
-    int size;
-    public ListNode deleteDuplicates(ListNode head){
-        ListNode tempNode = head;
-        int value = head.val;
 
-        for(int i = 0; i < size; i++){
-            if(tempNode.val != value){
-                tempNode = tempNode.next;
-            }            
+    public ListNode deleteDuplicates(ListNode head){
+        ListNode cur = head;
+
+        while(cur != null){
+            while(cur.next != null && cur.next.val == cur.val){
+                cur.next = cur.next.next;
+            }
+            cur = cur.next;
         }
 
-        return tempNode;
+        return head;
     }
 }
