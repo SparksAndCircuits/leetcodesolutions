@@ -1,7 +1,6 @@
 package Easy.MaximumDepthOfBinaryTree;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Stack;
 
 /*  Leetcode Question 104. Maximum Depth of a Binary Tree
 
@@ -12,22 +11,22 @@ import java.util.Queue;
 */
 public class MaxDepth {
     public int maxDepth(TreeNode root){
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.add(root);
-        TreeNode presentNode = null;
+        Stack<Object[]> stack = new Stack<>();
+        stack.push(new Object[]{root, 1});
+        int res = 0;
 
-        while(!queue.isEmpty()){
-            presentNode = queue.remove();
+        while(!stack.isEmpty()){
+            Object[] current = stack.pop();
+            TreeNode node = (TreeNode) current[0];
+            int depth = (int) current[1];
 
-            if(presentNode.left != null){
-                queue.add(presentNode.left);
-            }
-
-            if(presentNode.right != null){
-                queue.add(presentNode.right);
+            if(node != null){
+                res = Math.max(res, depth);
+                stack.push(new Object[]{node.left, depth + 1});
+                stack.push(new Object[]{node.right, depth + 1});
             }
         }
 
-        return presentNode.val;
+        return res;
     }
 }
