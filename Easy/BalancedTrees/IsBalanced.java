@@ -1,8 +1,5 @@
 package Easy.BalancedTrees;
 
-import java.util.LinkedList;
-
-import java.util.Queue;
 
 /*  Leetcode question 110: Balanced Binary Tree
 
@@ -12,29 +9,19 @@ import java.util.Queue;
 
 public class IsBalanced {
     public boolean isBalanced(TreeNode root){
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.add(root);
-        TreeNode presentNode = null;
-        int left = 0;
-        int right = 0;
+        return dfs(root)[0] == 1;
+    }
 
-        while(!queue.isEmpty()){
-            presentNode = queue.remove();
-            if(presentNode.left != null){
-                queue.add(presentNode.left);
-                left++;
-            }
-
-            if(presentNode.right != null){
-                right++;
-            }
+    private int[] dfs(TreeNode node){
+        if(node == null){
+            return new int[]{1,0};
         }
 
-        if(left == right){
-            return true;
-        }
+        int[] left = dfs(node.left);
+        int[] right = dfs(node.right);
 
+        int balanced = (left[0] == 1 && right[0] == 1 && Math.abs(left[1] - right[1]) <= 1) ? 1 : 0;
 
-        return false;
+        return new int[]{balanced, 1 + Math.max(left[1],right[1])};
     }
 }
