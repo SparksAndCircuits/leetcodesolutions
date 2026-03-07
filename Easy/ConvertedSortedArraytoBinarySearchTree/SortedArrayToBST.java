@@ -7,32 +7,19 @@ package Easy.ConvertedSortedArraytoBinarySearchTree;
 */
 
 public class SortedArrayToBST {
-    TreeNode head;
-    public class BinarySearchTree{
-        TreeNode root;
-        BinarySearchTree(){
-            root = null;
-        }
+    public TreeNode sortedArrayToBST(int[] nums){
+        return helper(nums, 0, nums.length - 1);
     }
 
-    public TreeNode sortedArrayToBST(int[] nums){
-        TreeNode tempNode = head;
-        for(int i = 0; i < nums.length; i++){
-           if(tempNode == null){
-                TreeNode newNode = new TreeNode();
-                newNode.val = nums[i];
-                return newNode;
-           }else if(nums[i] <= tempNode.val){
-                tempNode.left = insert(tempNode.left, i);
-                return tempNode;
-           }else{
-            tempNode.right = insert(tempNode.right, i);
-            return tempNode;
-           }
+    private TreeNode helper(int[] nums, int l, int r){
+        if(l > r){
+            return null;
         }
 
-        void insert(int value){
-            insert(root, value);
-        }
+        int m = (l + r) / 2;
+        TreeNode root = new TreeNode(nums[m]);
+        root.left = helper(nums, l, m - 1);
+        root.right = helper(nums, m + 1, r);
+        return root;
     }
 }
