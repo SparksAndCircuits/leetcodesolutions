@@ -1,7 +1,5 @@
 package Easy.PathSum;
 
-import java.util.LinkedList;
-import java.util.Queue;
 
 /*  LeetCode question 112: Path Sum
 
@@ -13,16 +11,20 @@ import java.util.Queue;
 
 public class PathSum {
     public boolean hasPathSum(TreeNode root, int targetSum){
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.add(root);
-        while(!queue.isEmpty()){
-            TreeNode presentNode = queue.remove();
+        return dfs(root, 0, targetSum);
+    }
 
-            if(presentNode.val + presentNode.left.val == targetSum){
-                queue.add(presentNode.left);
-                return true;
-            }
+    private boolean dfs(TreeNode node, int curSum, int targetSum){
+        if(node == null){
+            return false;
         }
-        return false;
+
+        curSum += node.val;
+
+        if(node.left == null && node.right == null){
+            return curSum == targetSum;
+        }
+
+        return dfs(node.left, curSum, targetSum) || dfs(node.right, curSum, targetSum);
     }
 }
