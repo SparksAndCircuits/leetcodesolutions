@@ -1,7 +1,8 @@
 package Easy.MinimumDepthOfbinaryTree;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Stack;
 
 /*  Leetcode question 111: Minimum Depth of Binary Tree
 
@@ -15,26 +16,34 @@ import java.util.Queue;
 
 public class MinDepth {
     public int minDepth(TreeNode root){
-        int depth = 0;
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        TreeNode presentNode = queue.remove();
+        Stack<int[]> stack = new Stack<>();
 
-        while(!queue.isEmpty()){
-            if(presentNode.left != null){
-                queue.add(presentNode.left);
-                depth++;
-            }else if(presentNode.left == null){
-                return depth;
-            }
+        Deque<NodeDepthPair> stacks = new ArrayDeque<>();
+        stacks.push(new NodeDepthPair(root, 1));
+        int res = 0;
 
-            if(presentNode.right != null){
-                queue.add(presentNode.right);
-                depth++;
-            }else if(presentNode.right == null){
-                return depth;
+        while(!stack.isEmpty()){
+            NodeDepthPair pair = stacks.pop();
+            TreeNode node = pair.node;
+            int depth = pair.depth;
+
+            if(node != null){
+                res = Math.max(res, depth);
+                stacks.push(new NodeDepthPair(node.left, depth + 1));
+                stacks.push(new NodeDepthPair(node.right, depth + 1));
             }
         }
 
-        return depth;
+        return res;
+    }
+
+    private static class NodeDepthPair{
+        TreeNode node;
+        int depth;
+
+        NodeDepthPair(TreeNode node, int depth){
+            this.node = node;
+            this.depth = depth;
+        }
     }
 }
